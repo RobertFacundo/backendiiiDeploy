@@ -1,64 +1,62 @@
-# Proyecto de Generación y Gestión de Datos Mock
+# Data Generation and Management Project
 
-Este proyecto cuenta con varios endpoints esenciales para la generación y almacenamiento de datos en la base de datos. Los principales son:
+This project contains several essential endpoints for generating and storing data in the database. The main ones are:
 
 ### 1. **`/api/mocks/mockingpets`**  
-Genera un conjunto de mascotas aleatorias, utilizando el paquete `faker.js` para simular atributos como el nombre, especie, raza, edad y estado de adopción.
+Generates a set of random pets using the faker.js package to simulate attributes such as name, species, breed, age, and adoption status.
 
 ### 2. **`/api/mocks/mockingusers`**  
-Genera un conjunto de usuarios aleatorios, asignando un nombre, apellido, correo electrónico y una contraseña encriptada. Además, se asigna un rol (admin o user) y se deja un campo de mascotas vacío.
+Generates a set of random users, assigning a first name, last name, email, and an encrypted password. A role (admin or user) is also assigned, and a pet field is left empty.
 
 ### 3. **`/api/mocks/generateData`**  
-Permite insertar en la base de datos la cantidad de usuarios y mascotas especificada en los parámetros de la solicitud. Los datos generados son insertados en las colecciones correspondientes en MongoDB.
+Allows inserting the specified number of users and pets into the database according to the parameters in the request. The generated data is inserted into the corresponding collections in MongoDB.
 
-## Características Adicionales|| (implementadas en desafios de clases anteriores)
+## Additional Features (implemented in previous class challenges)
 
-### Logger y Registro de Errores  
-El proyecto también implementa un sistema de **loggers** para registrar eventos clave y errores durante el funcionamiento del servidor. Estos registros facilitan la depuración al permitir un seguimiento detallado de las acciones, como la inserción de datos en la base de datos o la ejecución de funciones específicas.
+### Logger and Error Logging  
+The project also implements a logger system to record key events and errors during server operation. These logs facilitate debugging by providing a detailed track of actions such as data insertion into the database or the execution of specific functions.
 
-### Middleware de Manejo de Errores  
-Además, se han integrado **middlewares de manejo de errores personalizados** que gestionan cualquier problema durante la generación de datos o interacciones con la base de datos. Estos middlewares capturan y responden con mensajes claros y consistentes, lo que mejora la robustez del servidor y la experiencia del desarrollador al enfrentar errores.
+### Error Handling Middleware  
+Additionally, custom error-handling middlewares have been integrated to manage any issues during data generation or interactions with the database. These middlewares capture and respond with clear and consistent messages, enhancing the server's robustness and the developer experience when facing errors.
 
-#### CAMBIOS DE PREENTREGA
-Cambie la conexion de mi base de datos de manera local, y actualice el archivo js principal con la base de datos MongoDB Atlas. 
-Además modifique el comando para correr la aplicacion => "start": "node src/app.js".
+#### PRE-DELIVERY CHANGES 
+I changed my local database connection and updated the main JS file with the MongoDB Atlas database.
+Additionally, I modified the command to run the application => "start": "node src/app.js".
 
 --------------------------
 
-## Actividad práctica hacia la entrega final del proyecto
+## Practical Activity Towards Final Project Delivery
 
-### Implementación de Swagger y Archivos YAML
+### Implementation of Swagger and YAML Files
 
-Se ha integrado Swagger para facilitar la documentación y pruebas de nuestra API. Los archivos de configuración YAML(dentro del directorio /docs) son utilizados para definir y estructurar la documentación de la API de forma clara y ordenada, describiendo cada uno de los endpoints, parámetros, respuestas y posibles errores. Estos archivos son utilizados por Swagger para generar automáticamente la interfaz de usuario interactiva y asegurar que la API sea fácilmente accesible y comprensible. 
+Swagger has been integrated to facilitate the documentation and testing of our API. The YAML configuration files (within the /docs directory) are used to define and structure the API documentation clearly, describing each endpoint, parameters, responses, and potential errors. These files are used by Swagger to automatically generate the interactive user interface and ensure the API is easily accessible and understandable.
 
-La url correspondiente es => http://localhost:8080/docs/
+The corresponding URL is => https://backendiiideploy.onrender.com/docs/    //* let it load *//
 
-### Implementaciones de Pruebas (Mocha, Chai)
+### Test Implementations (Mocha, Chai)
 
-`Users.test.js`: Se incluyen pruebas para el modelo de usuario utilizando la base de datos en memoria con MongoMemoryServer. Las pruebas cubren la creación de un nuevo usuario, asegurando que se cree con un arreglo vacío de mascotas por defecto, y la obtención de un usuario por su correo electrónico.
+`Users.test.js`: Includes tests for the user model using an in-memory database with MongoMemoryServer. The tests cover the creation of a new user, ensuring that it is created with an empty pet array by default, and retrieving a user by their email.
 
-`chaiTest.test.js`: Implementa las mismas pruebas que Users.test.js, pero utilizando la librería de aserciones Chai para una sintaxis más legible y estructurada. Además, se agregan pruebas para actualizar y eliminar un usuario, verificando que estas acciones se realicen correctamente en la base de datos.
+`chaiTest.test.js`: Implements the same tests as Users.test.js but uses the Chai assertion library for a more readable and structured syntax. It also adds tests for updating and deleting a user, verifying that these actions are performed correctly in the database.
 
-`bcryptTest.test.js`: Se incluyen pruebas para verificar el correcto funcionamiento de bcrypt en el proceso de hash y comparación de contraseñas. Se asegura que el hash de la contraseña sea diferente al valor original y que la comparación de contraseñas funcione correctamente, tanto cuando coinciden como cuando no.
+`bcryptTest.test.js`: Includes tests to verify the correct functioning of bcrypt in the password hashing and comparison process. It ensures that the hashed password is different from the original value and that password comparison works correctly, both when they match and when they do not.
 
-`useDtoTest.test.js`: Se prueban las transformaciones aplicadas a los objetos UserDTO. Las pruebas verifican que el nombre y el apellido se unifiquen en una sola propiedad "name", y que las propiedades innecesarias como password, first_name y last_name sean eliminadas correctamente en la transformación del objeto.
+`useDtoTest.test.js`: Tests transformations applied to the UserDTO objects. The tests verify that the first name and last name are merged into a single "name" property and that unnecessary properties like password, first_name, and last_name are properly removed during the object transformation.
 
-`superTestPets.test.js`: Incluye la prueba de los endpoints de mascota y Pruebas para crear una mascota con imagen
+`superTestPets.test.js`: Includes tests for the pet endpoints and tests to create a pet with an image.
 
-- POST /api/pets/withimage - Crear una mascota con imagen 
+- POST /api/pets/withimage - Create a pet with an image
+This tests the process of creating a pet, but with an attached image. The image is read from a local path (../public/img/test-image.jpg) and sent as part of the request using the .attach() method. It verifies that the pet is created correctly with the image and that the image is present in the response.
 
-Se prueba el proceso de creación de una mascota, pero esta vez con una imagen adjunta. La imagen se lee desde una ruta local (../public/img/test-image.jpg), y se envía como parte de la solicitud usando el método .attach().
-Verifica que la mascota se haya creado correctamente con la imagen y que la imagen esté presente en la respuesta.
+For proper test execution, we are using mongodb-memory-server, a dependency that allows creating an in-memory MongoDB instance to perform isolated tests without affecting a real database.
 
-Para una correcta ejecución de las pruebas, se está utilizando mongodb-memory-server, dependencia que permite crear una instancia de MongoDB en memoria para realizar las pruebas de manera aislada y sin afectar una base de datos real.
+## Project Restructuring and New Features
+Instead of using models related to "adoption" and "pets," a product model has been incorporated to manage items in an online catalog.
 
-## Reestructuración del Proyecto y Nuevas Funcionalidades
-En lugar de utilizar modelos relacionados con "adoption" y "pets", se ha incorporado un modelo de producto que permite gestionar los artículos de un catálogo en línea.
+The restructuring includes the creation of the necessary abstraction levels to handle products, such as DAO, services, and controllers. Additionally, routes have been implemented to interact with products through an API.
 
-La reestructuración incluye la creación de los niveles de abstracción necesarios para manejar los productos, tales como el DAO, services, y controllers. Además, se han implementado rutas para interactuar con los productos a través de una API.
-
-### Rutas Disponibles // Ejemplo de Ruta POST para Crear un Producto
-http://localhost:8080/api/products 
+### Available Routes // Example POST Route to Create a Product
+https://backendiiideploy.onrender.com/api/products 
 
 {
     "name": "Laptop Gaming",
@@ -70,75 +68,77 @@ http://localhost:8080/api/products
 }
 
 ----------------------
-Además tambien se agregó un campo cart a la creacion de un nuevo user, permitiendo poder agregar y eliminar productos al carro del usuario
+Additionally, a cart field was added to the creation of a new user, allowing the user to add and remove products from their cart.
 
-POST http://localhost:8080/api/users/:uid/cart/:pid
-DELETE http://localhost:8080/api/users/:uid/cart/:pid
+POST https://backendiiideploy.onrender.com/api/users/:uid/cart/:pid
+DELETE https://backendiiideploy.onrender.com/api/users/:uid/cart/:pid
 
-### Carga de documentos
-Se implementa POST /:uid/documents permite a los usuarios cargar documentos y imágenes. Los archivos se procesan con multer, se guardan en las carpetas products o documents dependiendo del tipo de archivo, y se asocian con el usuario correspondiente dentro de una subcarpeta con el userId. En caso de éxito, se devuelven los documentos cargados, o un mensaje de error si no se subieron archivos o si ocurrió un problema con la base de datos.
+### Document Upload
+POST /:uid/documents allows users to upload documents and images. Files are processed with multer, stored in the products or documents folders depending on the file type, and associated with the corresponding user in a subfolder with the userId. Upon success, the uploaded documents are returned, or an error message if no files were uploaded or a database issue occurred.
 
-### Tests y Documentacion
-Bajo los siguientes scripts estan testeadas todas las funcionalidades y routes de products, sessions y users: 
+### Tests and Documentation
+The following scripts test all functionalities and routes for products, sessions, and users:
 
     "userTest": "mocha tests/Users.test.js",
     "testProduct":"mocha tests/productsTest.test.js",
     "sessionstest": "mocha tests/sessionsTest.test.js",
     "cartsTest": "mocha tests/Carts.test.js"
 
-Las documentaciones pertinentes a products, users y carts se encuentran en los archivos 
+The relevant documentation for products, users, and carts can be found in the files
 `products.yaml`
 `users.yaml`
 `carts.yaml`
 
-Se puede verificar la url de la documentacion swagger en => http://localhost:8080/docs/ 
- Y para facilitar la verificación de los endpoints proporciono valores de ejemplos de la base de datos => 
+You can verify the Swagger documentation URL at => https://backendiiideploy.onrender.com/docs/
+To facilitate endpoint verification, I provide sample values from the database =>
 - uid = 67b773fda16a5f85687c83f3
 - pid = 67b74d829266981086180ab1
 
-Y para realizar un login =>
+To perform login =>
 {
   "email": "user8.test@example.com",
   "password": "123"
 }
 
 ### Handlebars
-Para mejorar la presentacion se agregó un renderizado con handlebars en donde un usuario puede registrarse, hacer login, ver un home con su carro y los productos de la base de datos; en dicho home el usuario puede agregar productos a su carro y visualizarlos.
+For better presentation, rendering with Handlebars has been added where a user can register, log in, view a home page with their cart and products from the database; on this home page, the user can add products to their cart and view them.
 
-## Imagen de Docker
+## Docker Image
 
-La imagen de Docker para este proyecto se encuentra disponible en Docker Hub:
+The Docker image for this project is available on Docker Hub:
 
 [Docker Hub - robertfacundo/ecommerce-app](https://hub.docker.com/repository/docker/robertfacundo/ecommerce-app/general)
 
-Para ejecutar la imagen =>
+To run the image =>
 
 docker pull robertfacundo/ecommerce-app
 docker run -p 8080:8080 robertfacundo/ecommerce-app
 
 -------------------------------------------------
 
-### Agradecimientos 
+### Acknowledgments
 
-Quiero expresar mi agradecimiento a mis tutores y profesores del curso.
+I would like to express my gratitude to my tutors and professors in the course.
 
-Este proyecto es el resultado del aprendizaje adquirido durante el curso y representa mi compromiso por seguir creciendo en este maravilloso mundo del desarrollo web.
+This project is the result of the knowledge gained during the course and represents my commitment to continue growing in the wonderful world of web development.
 
-Actualmente estoy en la búsqueda activa de mi primer empleo como desarrollador web, una oportunidad que no solo marcaría mi inicio en el mundo IT, sino que representaría un significativo cambio en mi vida.
+I am currently actively seeking my first job as a web developer, an opportunity that would not only mark my entry into the IT world but would also represent a significant change in my life.
 
-A mis tutores y profesores => dado que ustedes ya forman parte del sector IT, tal vez estén al tanto de alguna vacante o conozcan personas en busca de talento emergente. Cualquier recomendación o consejo sería invaluable para mí, y estaré profundamente agradecido por su apoyo en esta etapa inicial de mi carrera.
+To my tutors and professors => Since you are already part of the IT sector, you might be aware of job openings or know people looking for emerging talent. Any recommendations or advice would be invaluable to me, and I would be deeply grateful for your support at this early stage of my career.
 
-Si desean conocer más sobre mi trabajo, les invito a visitar mi portfolio personal, donde encontrarán otros proyectos en los que he trabajado, mis habilidades técnicas, y más información sobre mí como profesional en desarrollo.
+If you would like to know more about my work, I invite you to visit my personal portfolio, where you will find other projects I have worked on, my technical skills, and more information about me as a professional in development.
 
 Portfolio: https://robertfacundo.netlify.app/
 
-¡No duden en contactarme si tienen alguna oportunidad o recomendación!
+Feel free to contact me if you have any opportunity or recommendation!
 
-Gracias por tomarte el tiempo de llegar hasta acá.
+Thank you for taking the time to get here.
 
-Atentamente,
+Sincerely,
 
 Facundo Robert
+
+
 
 **Creado por:**  
 Facundo Robert
